@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var currentTab: Tab = .home
+    
+    //기본 탭뷰가 터치가 안되게끔 하는법
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack(alignment: .bottom) {
+            TabView(selection: $currentTab) {
+                Text("홈뷰")
+                    .tag(Tab.home)
+                Text("게시판뷰")
+                    .tag(Tab.forum)
+                Text("스터디뷰")
+                    .tag(Tab.study)
+                Text("프로필뷰")
+                    .tag(Tab.profile)
+            }
         }
-        .padding()
+        
+        CustomTabView(currentTab: $currentTab)
+        
     }
 }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//탭 모델 만들기
 enum Tab: String, CaseIterable {
     case home = "house.fill"
     case forum = "message.fill"
@@ -23,8 +24,11 @@ enum Tab: String, CaseIterable {
     }
 }
 
+
+//탭 버튼 구성
 struct CustomTabView: View {
-    @State var currentTab: Tab = .home
+    //Binding으로 연결되게끔
+    @Binding var currentTab: Tab
     
     var body: some View {
         HStack(spacing: 0) {
@@ -52,6 +56,7 @@ struct CustomTabView: View {
                     }
                     .foregroundColor(currentTab == tab ? .green : .gray)
                 }
+                .buttonStyle(TabButtonStyle())
                 
             }
         }
@@ -59,17 +64,18 @@ struct CustomTabView: View {
         .padding(.top, 10)
         .padding(.bottom, 8)
         .background(.ultraThinMaterial)
-
+        
     }
 }
-//
-////반짝이는 느낌 없애기위해 만듬
-//struct TabButtonStyle: ButtonStyle {
-//    func makeBody(configuration: Configuration) -> some View {
-//        <#code#>
-//    }
-//}
+
+//반짝이는 느낌 없애기위해 커스텀버튼스타일 만듬
+struct TabButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.8 : 1.0)
+    }
+}
 
 #Preview {
-    CustomTabView()
+    CustomTabView(currentTab: .constant(Tab.home))
 }
