@@ -12,6 +12,7 @@
 		0669A6F22B98BBE400048B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0669A6F12B98BBE400048B89 /* Assets.xcassets */; };
 		0669A6F52B98BBE400048B89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0669A6F42B98BBE400048B89 /* Preview Assets.xcassets */; };
 		0669A6FC2B98BC0600048B89 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0669A6FB2B98BC0600048B89 /* CustomTabView.swift */; };
+		0669A6FE2B9A08E400048B89 /* TestNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0669A6FD2B9A08E400048B89 /* TestNavigationStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		0669A6F12B98BBE400048B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0669A6F42B98BBE400048B89 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0669A6FB2B98BC0600048B89 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		0669A6FD2B9A08E400048B89 /* TestNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNavigationStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,9 +57,10 @@
 			children = (
 				0669A6ED2B98BBDB00048B89 /* NavigationStackAndTabsApp.swift */,
 				0669A6EF2B98BBDB00048B89 /* ContentView.swift */,
+				0669A6FB2B98BC0600048B89 /* CustomTabView.swift */,
 				0669A6F12B98BBE400048B89 /* Assets.xcassets */,
 				0669A6F32B98BBE400048B89 /* Preview Content */,
-				0669A6FB2B98BC0600048B89 /* CustomTabView.swift */,
+				0669A6FD2B9A08E400048B89 /* TestNavigationStack.swift */,
 			);
 			path = NavigationStackAndTabs;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				0669A6FC2B98BC0600048B89 /* CustomTabView.swift in Sources */,
 				0669A6F02B98BBDB00048B89 /* ContentView.swift in Sources */,
+				0669A6FE2B9A08E400048B89 /* TestNavigationStack.swift in Sources */,
 				0669A6EE2B98BBDB00048B89 /* NavigationStackAndTabsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
