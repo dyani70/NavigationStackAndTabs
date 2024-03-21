@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+//Destination이 될 View들을 enum으로 선언
+enum ViewOptions: Hashable {
+    case homeFirst(champion: ChampionModel)
+    case homeSecond(champion: ChampionModel)
+    
+    @ViewBuilder func view() -> some View {
+            switch self {
+                case .homeFirst(let champion): HomeRowDestinationView(champion: champion)
+                case .homeSecond(let champion): HomeSkinBuyView(champion: champion)
+            }
+        }
+    }
+
 struct ContentView: View {
     @State var currentTab: Tab = .home
     
@@ -39,6 +52,9 @@ struct ContentView: View {
                 }
                 
                 CustomTabView(currentTab: $currentTab)
+            }
+            .navigationDestination(for: ViewOptions.self) { option in
+                option.view()
             }
             
         }
@@ -73,7 +89,7 @@ struct HomeView: View {
         ScrollView {
             LazyVStack {
                 ForEach(ChampionModel.mockChampions) { champion in
-                    NavigationLink(value: champion) {
+                    NavigationLink(value: ViewOptions.homeFirst(champion: champion)) {
                         HomeRowView(champion: champion)
                         
                     }
@@ -83,9 +99,7 @@ struct HomeView: View {
                 }
             }
             .padding(.bottom, 50)
-            .navigationDestination(for: ChampionModel.self) { champion in
-                HomeRowDestinationView(champion: champion)
-            }
+            
         }
     }
 }
@@ -139,15 +153,22 @@ struct HomeRowDestinationView: View {
             Text(champion.name)
                 .font(.largeTitle)
             
-            NavigationLink(value: champion.name) {
+            NavigationLink(value: ViewOptions.homeSecond(champion: champion)) {
                 Text("스킨 사기")
                     .font(.title)
                     .bold()
             }
         }
-        .navigationDestination(for: String.self) { name in
-            Text(name).font(.largeTitle).bold() + Text(" 스킨을 사시겠어요?")
-        }
+    
+    }
+}
+
+struct HomeSkinBuyView: View {
+    let champion: ChampionModel
+    
+    var body: some View {
+        Text(champion.name).font(.largeTitle).bold() + Text(" 스킨을 사시겠어요?")
+        
     }
 }
 
