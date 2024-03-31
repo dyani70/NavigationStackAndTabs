@@ -20,8 +20,28 @@ enum ViewOptions: Hashable {
         }
     }
 
+//네비게이션 관리 객체만들기
+final class NavigationPathFinder : ObservableObject {
+    static let shared = NavigationPathFinder()
+    private init() { }
+    
+    @Published var path: NavigationPath = .init()
+    
+    //path 추가 로직
+    func addPath(option: ViewOptions) {
+        path.append(option)
+    }
+    
+    func popToRoot() {
+        path = .init()
+    }
+}
+
 struct ContentView: View {
+    @EnvironmentObject private var navPathFinder: NavigationPathFinder
     @State var currentTab: Tab = .home
+    //popToRoot 만들기
+    @State var path: NavigationPath = .init()
     
     //기본 탭뷰가 터치가 안되게끔 하는법
     init() {
@@ -31,7 +51,7 @@ struct ContentView: View {
     
     var body: some View {
         //네비게이션 스택 활용
-        NavigationStack {
+        NavigationStack(path: $navPathFinder.path) {
             ZStack(alignment: .bottom) {
                 TabView(selection: $currentTab) {
                     //네비게이션 스택은 탭뷰랑 같이 쓸때 상단에 있어야한다
@@ -85,14 +105,21 @@ extension ChampionModel {
 }
 
 struct HomeView: View {
+    @EnvironmentObject private var navPathFinder: NavigationPathFinder
     var body: some View {
         ScrollView {
             LazyVStack {
                 ForEach(ChampionModel.mockChampions) { champion in
-                    NavigationLink(value: ViewOptions.homeFirst(champion: champion)) {
+                    
+                    //NavigationLink를 Button으로
+                    
+                    Button {
+                        navPathFinder.addPath(option: .homeFirst(champion: champion))
+                    } label: {
                         HomeRowView(champion: champion)
                         
                     }
+                    
                     .tint(.primary)
                     
                     
@@ -138,6 +165,7 @@ struct HomeRowView: View {
 }
 
 struct HomeRowDestinationView: View {
+    @EnvironmentObject private var navPathFinder: NavigationPathFinder
     let champion: ChampionModel
     var body: some View {
         VStack(spacing: 20) {
@@ -153,25 +181,40 @@ struct HomeRowDestinationView: View {
             Text(champion.name)
                 .font(.largeTitle)
             
-            NavigationLink(value: ViewOptions.homeSecond(champion: champion)) {
+            Button {
+                navPathFinder.addPath(option: .homeSecond(champion: champion))
+            } label: {
                 Text("스킨 사기")
                     .font(.title)
                     .bold()
             }
+            
+            
+            
         }
     
     }
 }
 
 struct HomeSkinBuyView: View {
+    @EnvironmentObject private var navPathFinder: NavigationPathFinder
     let champion: ChampionModel
     
     var body: some View {
         Text(champion.name).font(.largeTitle).bold() + Text(" 스킨을 사시겠어요?")
+        
+        Button {
+            navPathFinder.popToRoot()
+            
+        } label: {
+            Text("안살래요")
+                .font(.largeTitle)
+        }
         
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(NavigationPathFinder.shared)
 }
